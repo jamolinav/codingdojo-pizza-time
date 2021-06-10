@@ -82,10 +82,14 @@ class User(models.Model):
 class Ingredient(models.Model):
     name            = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
     price           = models.IntegerField()
+    discount        = models.BooleanField(default=False)
+    special_price   = models.IntegerField()
 
 class PizzaSize(models.Model):
     size            = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
     price           = models.IntegerField()
+    discount        = models.BooleanField(default=False)
+    special_price   = models.IntegerField()
 
 class Pizza(models.Model):
     name            = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
@@ -126,3 +130,11 @@ class DetailExtraOrder(models.Model):
     all_extras      = models.ManyToManyField(Extra, related_name='all_extras_in_orders')
     quantity        = models.IntegerField()
     order           = models.ForeignKey(User, on_delete=models.CASCADE, related_name='all_extras_order')
+
+class SpecialDiscount(models.Model):
+    user            = models.ForeignKey(User, on_delete=models.CASCADE, related_name='discounts_created')
+    users_have_discount  = models.ManyToManyField(User, related_name='my_discounts')
+    amount          = models.IntegerField()
+    discount_used   = models.BooleanField(default=False)
+    created_at      = models.DateTimeField(auto_now_add=True)
+    updated_at      = models.DateTimeField(auto_now=True)
