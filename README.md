@@ -1,13 +1,5 @@
 # Proyecto Personal PIZZA TIME
 
-### No olvidar hacer
-
-```
-python manage.py makemigrations
-python manage.py migrate
-```
-Hacer click [aquí](http://52.67.195.126/) ver proyecto en AWS
-
 El modelo cumple las siguientes reglas de negocio:
 
 - El usuario tiene perfiles (type user (ejemplo: user/admin/cliente))
