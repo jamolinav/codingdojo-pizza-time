@@ -1,0 +1,43 @@
+{% extends 'examen_app/base.html' %}
+
+{% block head %}
+    <title>Wish App</title>
+{% endblock %}
+
+{% block header%}
+    <h1 class="d-flex justify-content-center page-title">Hello Michelle! Make a wish</h1>
+{% endblock %}
+
+{% block content %} 
+
+        <div class="tableFixHead table-wrapper">
+
+                <div class="title-form" style="background:linear-gradient(#21f3c287, #21aef34f, #00bcd400);">Register  -  Login</div>
+
+                {% if messages %}
+                    <div class="valid-messages">
+                        <ul class="messages" id="messages">
+                            {% for message in messages %}
+                            <li>{{message}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                
+                <div class="container-form">
+                    <div class="formRegister">
+                        <div class="django-form-wrapper">
+                            <h1>Hello {{user.first_name}} {{user.last_name}}</h1>
+                            <h3>Total wishes granted so far for all users {{total_wishes}}</h3>
+                            <h4>Your granted wishes {{granted_wishes}}</h4>
+                            <h4>Your pending wishes {{pending_wishes}}</h4>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+        </div>
+
+{% endblock %}
+
+    

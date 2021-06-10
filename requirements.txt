@@ -1,0 +1,6 @@
+setuptools
+wheel
+django>=2.2
+bcrypt
+gunicorn
+psycopg2
