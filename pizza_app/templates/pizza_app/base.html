@@ -12,8 +12,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     
-    <link rel="stylesheet" href="{% static 'examen_app/css/styles.css' %}">
-    <script src="{% static 'examen_app/js/functions.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'pizza_app/css/styles.css' %}">
+    <script src="{% static 'pizza_app/js/functions.js' %}"></script>
 
     {% block head %}
     {% endblock %}
@@ -26,12 +26,12 @@
         <div>
             {% if 'logged_user' in request.session %}
                 <p class="login_username_p" style="font-size: 24px;">Hello: {{ request.session.logged_user_name }} !</p>
-                <a class="login_register" href="{% url 'logout_examen_app' %}">Log Out</a>
+                <a class="login_register" href="{% url 'logout_pizza_app' %}">Log Out</a>
             {% else %}
-                <a class="login_register" href="{% url 'register_examen_app' %}">Login / Register</a>
+                <a class="login_register" href="{% url 'register_pizza_app' %}">Login / Register</a>
             {% endif %}
         </div>
-        <a href="{% url 'wishes' %}" style="display: flex; justify-content: center;">Home</a>
+        <a href="{% url 'home' %}" style="display: flex; justify-content: center;">Home</a>
         {% block content %}
         {% endblock %}
     </div>

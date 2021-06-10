@@ -1,14 +1,14 @@
-{% extends 'examen_app/base.html' %}
+{% extends 'pizza_app/base.html' %}
 
 {% block head %}
     {% load static %}
     <script></script>
     <link rel="stylesheet" href="">
-    <title>Examen</title>
+    <title>Pizza Time</title>
 {% endblock %}
 
 {% block header%}
-    <h1 class="d-flex justify-content-center page-title">Examen</h1>
+    <h1 class="d-flex justify-content-center page-title">Pizza Time</h1>
 {% endblock %}
 
 {% block content %}
@@ -28,8 +28,8 @@
         
         <div class="tableFixHead table-wrapper" style="display: grid; grid-template-columns: 100%;">
             <div class="tableFixHead table-wrapper">
-                <a href="{% url 'view_stats' %}" style="font-size: 18px;">View stats</a> |
-                <a href="{% url 'add_wish' %}" style="font-size: 18px;">Make a wish</a>
+                <a href="{% url 'home' %}" style="font-size: 18px;">View stats</a> |
+                <a href="{% url 'home' %}" style="font-size: 18px;">Make a wish</a>
                 <p>Your Wish List:</p>
                 <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                     <thead>
@@ -46,9 +46,9 @@
                         <td>{{wish.created_at}}</td>
                         <td>
                             {% if request.session.logged_user %}
-                                <a href="{% url 'remove_wish' id_wish=wish.id %}">Remove</a>
-                                <a href="{% url 'edit_wish' id_wish=wish.id %}"> | Edit | </a>
-                                <a href="{% url 'grand_wish' id_wish=wish.id %}">Granted!</a>
+                                <a href="{% url 'home' id_wish=wish.id %}">Remove</a>
+                                <a href="{% url 'home' id_wish=wish.id %}"> | Edit | </a>
+                                <a href="{% url 'home' id_wish=wish.id %}">Granted!</a>
                             {% endif %}
                         </td>
                         </tr>
@@ -76,7 +76,7 @@
                         <td>{{wish.total_likes}}</td>
                         <td>
                             {% if user not in wish.all_users_like.all %}
-                                <a href="{% url 'add_like' id_wish=wish.id %}"> Like </a>
+                                <a href="{% url 'home' id_wish=wish.id %}"> Like </a>
                             {% endif %}
                         </td>
                         </tr>

@@ -8,6 +8,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 import re
 from django.db.models.deletion import get_candidate_relations_to_delete
+from django.db.models.fields import CommaSeparatedIntegerField
 import bcrypt
 
 MIN_FIELD_LENGHT = 3
@@ -78,6 +79,29 @@ class User(models.Model):
             if check_password(password, bd_password):
                   return user
         return None           
+
+class Region(models.Model):
+    name            = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
+
+class City(models.Model):
+    name            = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
+    region          = models.ForeignKey(Region, on_delete=models.CASCADE, related_name='cities')
+
+class Comuna(models.Model):
+    name            = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
+    city          = models.ForeignKey(City, on_delete=models.CASCADE, related_name='comunas')
+
+class Address(models.Model):
+    alias           = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
+    street          = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
+    number          = models.IntegerField()
+    appartment      = models.CharField(max_length=15, default=None)
+    floor           = models.CharField(max_length=15, default=None)
+    comments        = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
+    comuna          = models.ForeignKey(Comuna, on_delete=models.CASCADE, related_name='addresses')
+    user            = models.ForeignKey(User, on_delete=models.CASCADE, related_name='my_addresses')
+    created_at      = models.DateTimeField(auto_now_add=True)
+    updated_at      = models.DateTimeField(auto_now=True)
 
 class Ingredient(models.Model):
     name            = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
