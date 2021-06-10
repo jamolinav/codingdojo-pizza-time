@@ -14,6 +14,8 @@ El modelo cumple las siguientes reglas de negocio:
 - Se pueden aplicar descuentos a cada ingrediente, pizza u orden
 - El usuario admin puede asignar descuentos a los usuarios, directamente o por algun criterio, ejemplo cantidad de compras
 - El cliente podra o no usar su descuento, pero no sera acumulable (field discount_used)
+- El cliente puede ingresar mas de una dirección asociada a su cuenta
+- Cada dirección esta asociadad a una comuna, la comuna a una ciudad y la ciudad a una region (foreign keys en cascada)
 
 
 ## MODELO ENTIDAD-RELACION
