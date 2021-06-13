@@ -23,18 +23,29 @@
     <div class="wrapper">
         {% block header %}
         {% endblock %}
-        <div>
-            {% if 'logged_user' in request.session %}
-                <p class="login_username_p" style="font-size: 24px;">Hello: {{ request.session.logged_user_name }} !</p>
-                <a class="login_register" href="{% url 'logout_pizza_app' %}">Log Out</a>
-            {% else %}
-                <a class="login_register" href="{% url 'register_pizza_app' %}">Login / Register</a>
-            {% endif %}
+        <div style="display: flex; justify-content: space-between;">
+            <div>
+                {% if 'logged_user' in request.session %}
+                    <p class="login_username_p" style="font-size: 14px;">Hello: {{ request.session.logged_user_name }} !</p>
+                    <p class="login_username_p" style="font-size: 14px;">Perfil: {{ request.session.logged_perfil }} </p>
+                    <a class="login_register" href="{% url 'logout_pizza_app' %}">Log Out</a>
+                {% else %}
+                    <a class="login_register" href="{% url 'login_pizza_app' %}">Login</a>
+                {% endif %}
+            </div>
+            <div style="display: flex; align-items: center; margin-right: 1%;">
+                <a href="{% url 'home' %}"><img src="{% static 'pizza_app/img/home.png' %}" alt="imagen pizza napolitana" style="width: 20px;"></a>
+                <a href="{% url 'ver_carrito' %}"><img src="{% static 'pizza_app/img/carrito.jpeg' %}" alt="imagen pizza napolitana" style="width: 40px;"></a>
+                <p class="login_register">{{ request.session.carrito | length }} (${{ request.session.total_carrito }})</p>
+            </div>
         </div>
-        <a href="{% url 'home' %}" style="display: flex; justify-content: center;">Home</a>
+        <hr>
         {% block content %}
         {% endblock %}
+
+
     </div>
+
 </body>
 </html>
 

@@ -1,0 +1,88 @@
+{% extends 'pizza_app/base.html' %}
+
+{% block head %}
+    {% load static %}
+    <script></script>
+    <link rel="stylesheet" href="">
+    <title>Pizza Time</title>
+{% endblock %}
+
+{% block header%}
+    <h1 class="d-flex justify-content-center page-title">Pizza Time</h1>
+{% endblock %}
+
+{% block content %}
+    {% load tz %}
+    {% timezone "America/Santiago" %}
+
+    {% if messages %}
+        <br>
+        <div class="valid-messages">
+            <ul class="messages" id="messages">
+                {% for message in messages %}
+                <li>{{message}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+
+    
+    <div class="tableFixHead table-wrapper">
+        <form id="form_create_pizza" class="container-wrapper" style="display: block; background: linear-gradient(174deg, #e4d6c0, #ffffee);" method="POST" action="{% url 'create_pizza' %}">
+            {% csrf_token %}
+            <input type="hidden" name="discount" id="discount" value="0">
+            <div style="display: grid; grid-template-columns: 50% 50%;">
+                <div>
+                    <div style="margin-bottom: 2%;">
+                        <label for="name" style="margin-bottom: 10px;font-weight: bold;color: #ff5721;font-size: 20px;">Nombre de su Pizza:</label>
+                        <input type="text" name="name" id="name" style="border-radius: 8px;height: 10%;border-color: coral;" value="{{pizza.name}}">
+                    </div>
+                    {% if request.session.logged_perfil == 'Administrador' %}
+                        <div style="margin-bottom: 2%;">
+                            <label for="" style="margin-bottom: 10px;font-weight: bold;color: #ff5721;font-size: 20px;">Imagen:</label>
+                            <input type="text" name="image" id="image" style="border-radius: 8px;height: 10%;border-color: coral;" value="{{pizza.image}}">
+                        </div>
+                        <div style="margin-bottom: 2%;">
+                            <label for="" style="margin-bottom: 10px;font-weight: bold;color: #ff5721;font-size: 20px;">Precio:</label>
+                            <input type="text" name="price" id="price" style="border-radius: 8px;height: 10%; border-color: coral;" value="{{pizza.price}}">
+                        </div>
+                        <div style="margin-bottom: 2%;">
+                            <label for="" style="margin-bottom: 10px;font-weight: bold;color: #ff5721;font-size: 20px;">Precio Oferta:</label>
+                            <input type="text" name="special_price" id="price" style="border-radius: 8px; height: 10%;border-color: coral;" value="{{pizza.special_price}}">
+                        </div>
+                    {% else %}
+                        <input type="hidden" name="image" id="image" value="pizza-icon.png">
+                        <input type="hidden" name="price" id="price" value="{{pizza.price}}">
+                        <input type="hidden" name="special_price" id="price" value="{{pizza.special_price}}">
+                    {% endif %}
+                </div>
+                <img src="{% static 'pizza_app/img/pizza-making.jpeg' %}" alt="imagen haciendo pizza" style="width: 100%;">
+            </div>
+            {% for ingredient in ingredients|dictsort:"orden" %}
+                {% load static %}
+                
+                    <label style="margin-bottom: 10px;font-weight: bold;color: #ff5721;font-size: 20px;">{{ ingredient.name }} ({{ ingredient.optional }})</label>
+
+                    <div style="display: flex;">
+                        {% for option in ingredient.options.all|dictsort:"orden" %}
+                        <div>
+                            <label for="{{ option.option }}" style="color: #ff5721;">{{ option.option }} (${{option.price}})</label>
+                            {% if ingredient.multiple_option == True %}
+                                <input style="margin-right: 20px;" onclick="get_price()" type="checkbox" id="{{ option.option }}" name="Option_{{ option.id }}" value="{{ option.id }}|{{ option.price }}">
+                            {% else %}
+                                <input style="margin-right: 20px;" onclick="get_price()" type="radio" id="{{ option.option }}" name="Option_{{ ingredient.id }}" value="{{ option.id }}|{{ option.price }}">
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                <hr>
+            {% endfor %}
+            
+            <p><button type="submit" style="border-radius: 5px;background-color: #ff5721;color: white;">Register</button></p>
+
+        </form>
+    </div>
+    
+    {% endtimezone %}
+{% endblock %}

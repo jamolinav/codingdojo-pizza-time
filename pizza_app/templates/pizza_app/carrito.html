@@ -1,0 +1,71 @@
+{% extends 'pizza_app/base.html' %}
+
+{% block head %}
+    {% load static %}
+    <script></script>
+    <link rel="stylesheet" href="">
+    <title>Pizza Time</title>
+{% endblock %}
+
+{% block header%}
+    <h1 class="d-flex justify-content-center page-title">Pizza Time</h1>
+{% endblock %}
+
+{% block content %}
+    {% load tz %}
+    {% timezone "America/Santiago" %}
+
+    {% if messages %}
+        <br>
+        <div class="valid-messages">
+            <ul class="messages" id="messages">
+                {% for message in messages %}
+                <li>{{message}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="tableFixHead table-wrapper">
+        <div class="table-wrapper">
+            <h3>Detalle de su Orden:</h4>
+            <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in request.session.carrito %}
+                {% load static %}
+                <tr>
+                    <td style="width: 70%;">
+                        <img src="{% static 'pizza_app/img/'|add:item.image %}" alt="icono item" style="width: 5%; margin-right: 2%;">
+                        {{item.name}}
+                    </td>
+                    <td style="width: 20%;">${{item.price}}</td>
+                    <td style="text-align: center;">
+                        {% if request.session.logged_user %}
+                            <a href="/del_item_carrito/{{item.id_carrito}}">
+                                <img src="{% static 'pizza_app/img/eliminar.png' %}" alt="icono item" style="width: 30%; margin-right: 2%;">
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <hr>
+            <div style="display: flex; justify-content: space-evenly;">
+                <p>Total:</p>
+                <p>${{ request.session.total_carrito }}</p>
+            </div>
+            <hr>
+                <h5>Dirección de Envío:</h5>
+            <hr>
+        </div>
+    </div>
+
+    {% endtimezone %}
+{% endblock %}

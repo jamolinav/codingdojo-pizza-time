@@ -1,4 +1,4 @@
-.tableFixHead          { overflow: auto; height: 100%; width: 400px; }
+.tableFixHead          { overflow: auto; height: 80%; width: 400px; }
 .tableFixHead tbody th { position: sticky; left: 0; }
 
 /* Just common table stuff. Really. */
@@ -7,12 +7,12 @@ th, td { padding: 8px 16px; }
 th     { background:#eee; }
 
 #dtBasicExample th{
-    background: linear-gradient(#2196f387, #2196f338, #00bcd400);
+    background: linear-gradient(#ffeb3b, #cddc39, #00bcd400);
+    color: #ff5722;
     height: 8%;
     text-align: left;
     font-style: italic;
     padding-top: 8px;
-    color: steelblue;
     font-weight: bold;
 }
 
@@ -36,12 +36,12 @@ footer{
     color: red;
 }
 .page-title{
-    background: linear-gradient(#2196f387, #2196f338, #00bcd400);
+    background: linear-gradient(#ffeb3b, #cddc39, #00bcd400);
+    color: #ff5722;
     height: 8%;
     text-align: -webkit-center;
     font-style: italic;
     padding-top: 8px;
-    color: steelblue;
     font-weight: bold;
 }
 
@@ -53,7 +53,7 @@ footer{
 }
 
 .login_register{
-    color: #1266f1;
+    color: #ff5722;
     font-size: smaller;
     font-family: ui-monospace;
     margin: 0 10px;
@@ -77,6 +77,7 @@ footer{
 }
 
 .wrapper{
+    background: #ffff0017;
     position: fixed;
     border: 1px solid rgb(206, 206, 206);
     margin: 5px;
@@ -103,13 +104,13 @@ footer{
 }
 
 .title-form{
-    background: linear-gradient(#2196f387, #2196f338, #00bcd400);
+    background: linear-gradient(#ffeb3b, #cddc39, #00bcd400);
+    color: #ff5722;
     height: 8%;
     text-align: -webkit-center;
     text-align: -moz-available;
     font-style: italic;
     padding-top: 8px;
-    color: steelblue;
     font-weight: bold;
     text-align: center;
 }
@@ -117,6 +118,21 @@ footer{
 .login-wind-body{
     background: white;
 }
+
+.container-wrapper{
+    display: grid;
+    padding-left: 2%;
+    padding-right: 2%;
+    border-radius: 5px;
+    border: 1px ridge #b0c4de61;
+    margin: 5%;
+    background: ghostwhite;
+    height: auto;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    justify-content: space-evenly;
+}
+
 .container-form{
     left: 5px;
     top: 29px;
@@ -124,7 +140,7 @@ footer{
     border: 1px ridge #b0c4de61;
     margin: 5px;
     background: ghostwhite;
-    height: 60%;
+    height: auto;
     padding-top: 2%;
     padding-bottom: 2%;
     display: flex;
@@ -157,15 +173,29 @@ footer{
     width: -moz-available;
 }
 
+.button{
+    height: 40px;
+    width: 30%;
+    margin-left: 0%;
+    border-radius: 5px;
+    border-color: #b0c4de61;
+    font-family: Tahoma;
+    font-size: 16px;
+    color: #ff5722;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .formRegister button{
-    height: auto;
-    width: 40%;
+    height: 40px;
+    width: 30%;
     margin-left: 20%;
     border-radius: 5px;
     border-color: #b0c4de61;
     font-family: Tahoma;
-    font-size: 11px;
-    color: steelblue;
+    font-size: 16px;
+    color: #ff5722;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -235,7 +265,7 @@ footer{
     color: gray;
     font-size: 12px;
     font-weight: bold;
-    width: 40%;
+    width: 30%;
     vertical-align: top;
 }
 
@@ -401,3 +431,40 @@ footer{
     font-size: 11px;
     color: steelblue;
 }
+.text {
+    font-size:28px;
+    font-family:helvetica;
+    font-weight:bold;
+    color:#71d90b;
+    text-transform:uppercase;
+  }
+
+  .parpadea {
+    animation-name: parpadeo;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  
+    -webkit-animation-name:parpadeo;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+  }
+  
+  @-moz-keyframes parpadeo{  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+  }
+  
+  @-webkit-keyframes parpadeo {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+     100% { opacity: 1.0; }
+  }
+  
+  @keyframes parpadeo {  
+    0% { opacity: 1.0; }
+     50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+  }

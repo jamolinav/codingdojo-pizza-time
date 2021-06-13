@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 import re
+from django.db.models.base import Model
 from django.db.models.deletion import get_candidate_relations_to_delete
 from django.db.models.fields import CommaSeparatedIntegerField
 import bcrypt
@@ -44,12 +45,15 @@ class UserType(models.Model):
     name            = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
     type            = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
 
+    def __str__(self):
+        return '%s' % (self.name)
+
 class User(models.Model):
     first_name      = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
     last_name       = models.CharField(max_length=45)
     email           = models.CharField(max_length=100)
     password        = models.CharField(max_length=254)
-    user_type       = models.ForeignKey(UserType, on_delete=models.CASCADE, related_name='all_users')
+    user_type       = models.ForeignKey(UserType, on_delete=models.CASCADE, related_name='all_users', default=UserType.objects.get(type='client'))
     created_at      = models.DateTimeField(auto_now_add=True)
     updated_at      = models.DateTimeField(auto_now=True)
     objects         = UserManager()
@@ -108,27 +112,46 @@ class Ingredient(models.Model):
     price           = models.IntegerField()
     discount        = models.BooleanField(default=False)
     special_price   = models.IntegerField()
+    optional        = models.BooleanField(default=False)
+    orden           = models.IntegerField()
+    multiple_option = models.BooleanField(default=False)
 
-class PizzaSize(models.Model):
-    size            = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
+class IngredientOption(models.Model):
+    option          = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
     price           = models.IntegerField()
     discount        = models.BooleanField(default=False)
-    special_price   = models.IntegerField()
+    special_price   = models.IntegerField(default=0)
+    ingredient      = models.ForeignKey(Ingredient, on_delete=models.CASCADE, related_name='options')
+    orden           = models.IntegerField(default=1)
+
+class PizzaManager(models.Manager):
+    def validator(self, postData):
+        errors  = {}
+        
+        if len(postData['name']) < 3:
+            errors['name'] = 'Debe agregar un nombre de al menos 3 caracteres'
+
+        if len(postData['image']) < 3:
+            errors['image'] = 'Debe agregar un nombre de imagen de al menos 3 caracteres'
+
+        return errors
 
 class Pizza(models.Model):
     name            = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
+    image           = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
     price           = models.IntegerField()
     discount        = models.BooleanField(default=False)
-    special_price   = models.IntegerField()
+    special_price   = models.IntegerField(default=0)
     user            = models.ForeignKey(User, on_delete=models.CASCADE, related_name='my_pizzas')
-    size            = models.ForeignKey(PizzaSize, on_delete=models.CASCADE, related_name='all_pizzas_size')
     all_users_like  = models.ManyToManyField(User, related_name='favorites_pizzas')
-    all_ingredients = models.ManyToManyField(Ingredient, related_name='all_in_pizzas')
+    all_ingredients = models.ManyToManyField(IngredientOption, related_name='all_in_pizzas')
     created_at      = models.DateTimeField(auto_now_add=True)
     updated_at      = models.DateTimeField(auto_now=True)
+    objects         = PizzaManager()
 
 class Extra(models.Model):
     name            = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
+    image           = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
     price           = models.IntegerField()
     discount        = models.BooleanField(default=False)
     special_price   = models.IntegerField()
@@ -140,7 +163,7 @@ class Order(models.Model):
     favorite        = models.BooleanField(default=False)
     total           = models.IntegerField()
     total_discount  = models.IntegerField()
-    fee_delvery     = models.IntegerField()
+    fee_delivery    = models.IntegerField()
     tax             = models.IntegerField()
     created_at      = models.DateTimeField(auto_now_add=True)
     updated_at      = models.DateTimeField(auto_now=True)
@@ -162,3 +185,4 @@ class SpecialDiscount(models.Model):
     discount_used   = models.BooleanField(default=False)
     created_at      = models.DateTimeField(auto_now_add=True)
     updated_at      = models.DateTimeField(auto_now=True)
+

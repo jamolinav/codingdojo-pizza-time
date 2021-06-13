@@ -15,13 +15,13 @@ $(document).ready( function() {
     
 });
 
-function deleteMessage(id) {
-    console.log('click mensaje: ' + id)
+function get_price2(id) {
+    console.log('click get price: ' + id)
     var csrf = $("input[name=csrfmiddlewaretoken]").val();
     console.log(csrf)
     $.ajax({
         method : "GET",
-        url : "/wall/delete_msg_ajax/"+id,
+        url : "/get_price/"+id,
         dataType : "JSON",
         data : {
             csrfmiddlewaretoken: csrf
@@ -29,11 +29,21 @@ function deleteMessage(id) {
     })
     .done (function(response){
         console.log(response)
-        var size = Object.keys(response["alert"]).length
-        if ( size > 0 ) {
-            alert(response["alert"])
-            //$('#messages').html(JSON.stringify(response["errors"]));
-        }
+        $('#price').val(response["price"])
+    })
+}
+
+function get_price(){
+    var data = $("#form_create_pizza").serialize()
+    $.ajax({
+        method : "POST",
+        url : "/get_price",
+        data : data,
+        dataType : "JSON"
+    })
+    .done (function(response){
+        console.log(response)
+        $('#price').val(response["price"])
     })
 }
 
@@ -60,24 +70,7 @@ function deleteComment(id) {
 
 }
 
-function addMessage(){
-    var data = $("#formMessage").serialize()
-    $.ajax({
-        method : "POST",
-        url : "/wall/add_message_ajax",
-        data : data,
-        dataType : "JSON"
-    })
-    .done (function(response){
-        var size = Object.keys(response["alert"]).length
-        if ( size > 0 ) {
-            alert(response["alert"])
-        } else {
-            console.log("no hay mensajes")
-        }
 
-    })
-}
 
 function addComment(formComment){
     var data = $("#"+formComment).serialize()

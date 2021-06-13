@@ -4,10 +4,12 @@ from ...models import User
 
 class UserForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput, required=True, label='Confirmar Contraseña')
+    
     class Meta:
         model = User
-        fields = '__all__'
-        #fields = ['name']
+        #fields = '__all__'
+
+        fields = ['first_name','last_name','email','password']
         widgets = {
             'password' : PasswordInput,
             'first_name' : TextInput(attrs={'placeholder': '<nombres>'}),
@@ -28,7 +30,35 @@ class UserForm(forms.ModelForm):
             raise forms.ValidationError(
                 "Las contraseñas no coinciden"
         )
-        
+
+class UserAdminForm(forms.ModelForm):
+    confirm_password = forms.CharField(widget=forms.PasswordInput, required=True, label='Confirmar Contraseña')
+    class Meta:
+        model = User
+        #fields = '__all__'
+        fields = ['first_name','last_name','email','user_type','password']
+        widgets = {
+            'password' : PasswordInput,
+            'first_name' : TextInput(attrs={'placeholder': '<nombres>'}),
+            'last_name' : TextInput(attrs={'placeholder': '<apellidos>'}),
+            'birth_date' : TextInput(attrs={'placeholder': '<fecha de nacimiento>', 'type': 'date'}),
+        }
+        labels = {
+            'first_name'  : 'Nombres',
+            'last_name'  : 'Apellidos',
+            'password'  : 'Contraseña',
+            'user_type'  : 'Tipo Usuario',
+        }
+
+    def clean(self):
+        cleaned_data = super(UserForm, self).clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+        if (password != confirm_password):
+            raise forms.ValidationError(
+                "Las contraseñas no coinciden"
+        )
+
 class UserLoginForm(forms.Form):
     email       = forms.EmailField(max_length=100, required=True)
     password    = forms.CharField(max_length=20, widget=forms.PasswordInput, required=True)
@@ -40,11 +70,6 @@ class UserLoginForm(forms.Form):
         print ("=====> User: ", user)
         return user
         
-    def login(self, request):
-        email = self.cleaned_data.get('email')
-        password = self.cleaned_data.get('password')
-        user        = User.authenticate(email, password)
-        return user
 
     '''
     def clean(self):

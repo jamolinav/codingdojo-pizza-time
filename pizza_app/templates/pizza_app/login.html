@@ -10,9 +10,8 @@
 
 {% block content %} 
 
-        <div class="tableFixHead table-wrapper">
+        <div class="tableFixHead table-wrapper" style="margin-top: 1%;">
 
-               
                 {% if messages %}
                     <div class="valid-messages">
                         <ul class="messages" id="messages">
@@ -24,19 +23,18 @@
                 {% endif %}
                 
                 {% load static %}
-                <img src="{% static 'pizza_app/img/pizza-header2.jpeg' %}" alt="imagen de deliciosa pizza" style="width: -webkit-fill-available;height: 250px;">
+                <img src="{% static 'pizza_app/img/pizza_header.jpg' %}" alt="imagen de deliciosa pizza" style="width: -webkit-fill-available;height: 250px;">
 
-                <div class="container-form">
-                    <form class="formRegister" action="{% url 'register_pizza_app' %}" method="POST">
+                <div class="container-form" >
+                    <form class="formRegister" action="{% url 'login_pizza_app' %}" method="POST" style="margin-top: 5%;">
                         {% csrf_token %}
                         <div class="django-form-wrapper">
-                            {{ user_form.as_p }}
+                            {{ user_login_form.as_p }}
                             <br>
-                            <p><button type="submit">Registrarme</button></p>
+                            <p>¿Aún no tienes cuenta? <a href="{% url 'register_pizza_app' %}">Registrate</a></p>
+                            <p><button type="submit">Ingresar</button></p>
                         </div>
-                        
                     </form>
-                    
                 </div>
                 
         </div>
