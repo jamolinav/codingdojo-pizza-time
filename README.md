@@ -19,5 +19,5 @@ El modelo cumple las siguientes reglas de negocio:
 
 
 ## MODELO ENTIDAD-RELACION
-![alt Purecloud](imgs/ER-MODELS.png)
+![alt Purecloud](imagenes/ER-MODELS.png)
 
