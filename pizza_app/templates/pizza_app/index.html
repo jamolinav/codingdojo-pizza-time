@@ -31,7 +31,7 @@
         <div class="container-wrapper">
             {% if 'logged_user' in request.session %}
             <div style="display: grid; grid-template-columns: 50% 50%;">
-                <h1 class="page-title" style="font-size: 16px;">Arma tu Propia Pizza!</h1>
+                <h3">Arma tu Propia Pizza!</h3>
                 <a href="{% url 'create_pizza' %}" class="parpadea"><img src="{% static 'pizza_app/img/pizza-icon.png' %}" alt="imagen pizza napolitana" style="width: 10%;"></a>
             </div>
             {% endif %}
@@ -80,6 +80,8 @@
                     </div>
                     <input class="button" type="button" value="Agregar" onclick="location.href='add_pizza/{{pizza.id}}';" style="margin-top: 2%;"/>
                 </div>
+                {% empty %}
+                    <p>No hay pizzas creadas precargar<a href="{% url 'make_pizzas_data' %}">aquí</a></p>
                 {% endfor %}
             </div>
             <hr>
@@ -94,6 +96,8 @@
                     </div>
                     <input class="button" type="button" value="Agregar" onclick="location.href='add_extra/{{extra.id}}';" style="margin-top: 2%;"/>
                 </div>
+                {% empty %}
+                    <p>No hay extras creadas precargar<a href="{% url 'make_extras_data' %}">aquí</a></p>
                 {% endfor %}
 
             </div>

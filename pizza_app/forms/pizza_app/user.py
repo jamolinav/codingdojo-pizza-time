@@ -4,17 +4,16 @@ from ...models import User
 
 class UserForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput, required=True, label='Confirmar Contraseña')
-    
     class Meta:
         model = User
         #fields = '__all__'
-
         fields = ['first_name','last_name','email','password']
         widgets = {
             'password' : PasswordInput,
             'first_name' : TextInput(attrs={'placeholder': '<nombres>'}),
             'last_name' : TextInput(attrs={'placeholder': '<apellidos>'}),
-            'birth_date' : TextInput(attrs={'placeholder': '<fecha de nacimiento>', 'type': 'date'}),
+            'email' : TextInput(attrs={'placeholder': '<email>'}),
+            'password' : TextInput(attrs={'placeholder': '<contraseña>', 'type': 'password'}),
         }
         labels = {
             'first_name'  : 'Nombres',

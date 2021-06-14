@@ -1,0 +1,45 @@
+{% extends 'pizza_app/base.html' %}
+
+{% block head %}
+    <title>Wish App</title>
+{% endblock %}
+
+{% block header%}
+    <h1 class="d-flex justify-content-center page-title">Pizza Time</h1>
+{% endblock %}
+
+{% block content %} 
+
+        <div class="tableFixHead table-wrapper">
+               
+                {% if messages %}
+                    <div class="valid-messages">
+                        <ul class="messages" id="messages">
+                            {% for message in messages %}
+                            <li>{{message}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                
+                {% load static %}
+                <img src="{% static 'pizza_app/img/navigate.jpeg' %}" alt="imagen de deliciosa pizza" style="width: -webkit-fill-available;height: 250px;">
+
+                <div class="container-form">
+                    <form class="formRegister" action="{% url 'create_address' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="django-form-wrapper">
+                            {{ address_form.as_p }}
+                            <br>
+                            <p><button type="submit">Crear Dirección</button></p>
+                        </div>
+                        
+                    </form>
+                    
+                </div>
+                
+        </div>
+
+{% endblock %}
+
+    

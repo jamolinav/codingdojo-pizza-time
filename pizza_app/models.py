@@ -53,7 +53,7 @@ class User(models.Model):
     last_name       = models.CharField(max_length=45)
     email           = models.CharField(max_length=100)
     password        = models.CharField(max_length=254)
-    user_type       = models.ForeignKey(UserType, on_delete=models.CASCADE, related_name='all_users', default=UserType.objects.get(type='client'))
+    user_type       = models.ForeignKey(UserType, on_delete=models.CASCADE, related_name='all_users')
     created_at      = models.DateTimeField(auto_now_add=True)
     updated_at      = models.DateTimeField(auto_now=True)
     objects         = UserManager()
@@ -95,6 +95,9 @@ class Comuna(models.Model):
     name            = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
     city          = models.ForeignKey(City, on_delete=models.CASCADE, related_name='comunas')
 
+    def __str__(self):
+        return '%s' % (self.name)
+
 class Address(models.Model):
     alias           = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
     street          = models.CharField(max_length=45, validators=[ValidarLongitudMinima])
@@ -123,6 +126,9 @@ class IngredientOption(models.Model):
     special_price   = models.IntegerField(default=0)
     ingredient      = models.ForeignKey(Ingredient, on_delete=models.CASCADE, related_name='options')
     orden           = models.IntegerField(default=1)
+
+    def __str__(self):
+        return '%s' % (self.option)
 
 class PizzaManager(models.Manager):
     def validator(self, postData):
@@ -160,6 +166,7 @@ class Extra(models.Model):
 
 class Order(models.Model):
     user            = models.ForeignKey(User, on_delete=models.CASCADE, related_name='my_orders')
+    address         = models.ForeignKey(Address, on_delete=models.CASCADE, related_name='orders')
     favorite        = models.BooleanField(default=False)
     total           = models.IntegerField()
     total_discount  = models.IntegerField()
@@ -171,12 +178,12 @@ class Order(models.Model):
 class DetailPizzaOrder(models.Model):
     all_pizzas      = models.ManyToManyField(Pizza, related_name='all_pizzas_in_orders')
     quantity        = models.IntegerField()
-    order           = models.ForeignKey(User, on_delete=models.CASCADE, related_name='all_pizzas_order')
+    order           = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='all_pizzas_order')
 
 class DetailExtraOrder(models.Model):
     all_extras      = models.ManyToManyField(Extra, related_name='all_extras_in_orders')
     quantity        = models.IntegerField()
-    order           = models.ForeignKey(User, on_delete=models.CASCADE, related_name='all_extras_order')
+    order           = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='all_extras_order')
 
 class SpecialDiscount(models.Model):
     user            = models.ForeignKey(User, on_delete=models.CASCADE, related_name='discounts_created')

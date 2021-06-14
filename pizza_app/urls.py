@@ -15,6 +15,13 @@ urlpatterns = [
     path('ver_carrito', views.ver_carrito, name='ver_carrito'),
     path('del_item_carrito/<str:carrito_id>', views.del_item_carrito, name='del_item_carrito'),
     path('delete_pizza/<int:pizza_id>', views.del_pizza, name='delete_pizza'),
+    path('create_address', views.create_address, name='create_address'),
+    path('make_purchases', views.make_purchases, name='make_purchases'),
+
+    path('make_pizzas_data', views.make_pizzas_data, name='make_pizzas_data'),
+    path('make_extras_data', views.make_extras_data, name='make_extras_data'),
+    path('del_data', views.del_data, name='del_data'),
+
 ]
 
 handler404 = 'pizza_app.views.error_404_view'

@@ -36,23 +36,23 @@
                 <div>
                     <div style="margin-bottom: 2%;">
                         <label for="name" style="margin-bottom: 10px;font-weight: bold;color: #ff5721;font-size: 20px;">Nombre de su Pizza:</label>
-                        <input type="text" name="name" id="name" style="border-radius: 8px;height: 10%;border-color: coral;" value="{{pizza.name}}">
+                        <input type="text" name="name" id="name" style="border-radius: 8px;height: 10%;border-color: coral; color: #f44336;" value="{{pizza.name}}">
                     </div>
                     {% if request.session.logged_perfil == 'Administrador' %}
                         <div style="margin-bottom: 2%;">
                             <label for="" style="margin-bottom: 10px;font-weight: bold;color: #ff5721;font-size: 20px;">Imagen:</label>
-                            <input type="text" name="image" id="image" style="border-radius: 8px;height: 10%;border-color: coral;" value="{{pizza.image}}">
+                            <input type="text" name="image" id="image" style="border-radius: 8px;height: 10%;border-color: coral; color: #f44336;" value="{{pizza.image}}">
                         </div>
                         <div style="margin-bottom: 2%;">
                             <label for="" style="margin-bottom: 10px;font-weight: bold;color: #ff5721;font-size: 20px;">Precio:</label>
-                            <input type="text" name="price" id="price" style="border-radius: 8px;height: 10%; border-color: coral;" value="{{pizza.price}}">
+                            <input type="text" name="price" id="price" style="border-radius: 8px;height: 10%; border-color: coral; color: #f44336;" value="{{pizza.price}}">
                         </div>
                         <div style="margin-bottom: 2%;">
                             <label for="" style="margin-bottom: 10px;font-weight: bold;color: #ff5721;font-size: 20px;">Precio Oferta:</label>
-                            <input type="text" name="special_price" id="price" style="border-radius: 8px; height: 10%;border-color: coral;" value="{{pizza.special_price}}">
+                            <input type="text" name="special_price" id="price" style="border-radius: 8px; height: 10%;border-color: coral; color: #f44336;" value="{{pizza.special_price}}">
                         </div>
                     {% else %}
-                        <input type="hidden" name="image" id="image" value="pizza-icon.png">
+                        <input type="hidden" name="image" id="image" value="pizza_ico.jpeg">
                         <input type="hidden" name="price" id="price" value="{{pizza.price}}">
                         <input type="hidden" name="special_price" id="price" value="{{pizza.special_price}}">
                     {% endif %}
@@ -79,7 +79,7 @@
                 <hr>
             {% endfor %}
             
-            <p><button type="submit" style="border-radius: 5px;background-color: #ff5721;color: white;">Register</button></p>
+            <p><button type="submit" style="border-radius: 5px;background-color: #ff5721;color: white;">Crear Pizza</button></p>
 
         </form>
     </div>
